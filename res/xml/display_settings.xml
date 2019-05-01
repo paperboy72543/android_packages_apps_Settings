@@ -182,4 +182,14 @@
         android:title="@string/volte_icon_title"
         android:summary="@string/volte_icon_summary"
         android:defaultValue="true"/>
+
+    <PreferenceCategory
+        android:title="@string/customization_category_title">
+
+        <Preference
+            android:key="display_customizations"
+            android:title="@string/display_customization_title"
+            android:fragment="com.android.settings.fusion.fragments.DisplayCustomizations" />
+    </PreferenceCategory>
+    
 </PreferenceScreen>
