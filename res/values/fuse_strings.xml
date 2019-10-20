@@ -108,5 +108,14 @@
     <!-- Customization category -->
     <string name="display_customization_title">Display Customizations</string>
     <string name="statusbar_category_title">Statusbar Customizations</string>
+    <string name="quicksettings_category_title">Quick Settings Customizations</string>
+    <string name="customization_category_title">Customizations</string>
+    <string name="statusbar_items_title">Statusbar items</string>
+
+    <!-- Statusbar net monitor -->
+    <string name="statusbar_ntraffic">Network</string>
+    <string name="network_traffic_state_title">Network traffic</string>
+    <string name="network_traffic_state_summary">Show the network activity in statusbar</string>
+    <string name="network_traffic_autohide_threshold_title">Auto-hide threshold</string>
 
 </resources>
