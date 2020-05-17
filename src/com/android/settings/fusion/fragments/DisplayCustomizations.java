@@ -40,7 +40,8 @@ import com.fusion.support.preferences.SecureSettingMasterSwitchPreference;
 import com.fusion.support.preferences.SecureSettingSwitchPreference;
 import com.fusion.support.preferences.SystemSettingMasterSwitchPreference;
 
-public class DisplayCustomizations extends SettingsPreferenceFragment {
+public class DisplayCustomizations extends SettingsPreferenceFragment 
+   implements Preference.OnPreferenceChangeListener{
 
     private static final String TAG = "Display Customizations";
     private static final String KEY_NETWORK_TRAFFIC = "network_traffic_state";
@@ -51,17 +52,17 @@ public class DisplayCustomizations extends SettingsPreferenceFragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         addPreferencesFromResource(R.xml.display_customizations);
-        
+        final ContentResolver resolver = getActivity().getContentResolver();
+
         mNetworkTraffic = (SystemSettingMasterSwitchPreference)
                 findPreference(KEY_NETWORK_TRAFFIC);
-        enabled = Settings.System.getIntForUser(resolver,
+        boolean enabled = Settings.System.getIntForUser(resolver,
                 KEY_NETWORK_TRAFFIC, 0, UserHandle.USER_CURRENT) == 1;
         mNetworkTraffic.setChecked(enabled);
         mNetworkTraffic.setOnPreferenceChangeListener(this);
 
     }
 
-  @Override
     public boolean onPreferenceChange(Preference preference, Object newValue) {
         ContentResolver resolver = getActivity().getContentResolver();
         if (preference == mNetworkTraffic) {
