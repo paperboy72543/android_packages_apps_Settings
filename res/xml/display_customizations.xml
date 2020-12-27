@@ -32,5 +32,18 @@
             android:defaultValue="false" />
 
     </PreferenceCategory>
-    
+
+    <PreferenceCategory
+        android:key="miscellaneous"
+        android:title="@string/miscellaneous_cust">
+        
+        <!-- Pulse music visualizer -->
+        <Preference
+            android:key="pulse_settings"
+            android:title="@string/pulse_settings"
+            android:summary="@string/pulse_settings_summary"
+            android:fragment="com.fusion.settings.fragments.Pulse" />
+
+    </PreferenceCategory>
+
 </PreferenceScreen>
