@@ -44,14 +44,19 @@ public class DisplayCustomizations extends SettingsPreferenceFragment
    implements Preference.OnPreferenceChangeListener{
 
     private static final String TAG = "Display Customizations";
+    private static final String SYSTEMUI_PACKAGE = "com.android.systemui";
+    private static final String CONFIG_RESOURCE_NAME = "flag_combined_status_bar_signal_icons";
     private static final String KEY_NETWORK_TRAFFIC = "network_traffic_state";
+    private static final String COBINED_STATUSBAR_ICONS = "show_combined_status_bar_signal_icons";
 
     private SystemSettingMasterSwitchPreference mNetworkTraffic;
+    private SecureSettingSwitchPreference mCombinedIcons;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         addPreferencesFromResource(R.xml.display_customizations);
+        PreferenceScreen prefSet = getPreferenceScreen();
         final ContentResolver resolver = getActivity().getContentResolver();
 
         mNetworkTraffic = (SystemSettingMasterSwitchPreference)
@@ -61,6 +66,26 @@ public class DisplayCustomizations extends SettingsPreferenceFragment
         mNetworkTraffic.setChecked(enabled);
         mNetworkTraffic.setOnPreferenceChangeListener(this);
 
+                mCombinedIcons = (SecureSettingSwitchPreference)
+                findPreference(COBINED_STATUSBAR_ICONS);
+        Resources sysUIRes = null;
+        boolean def = false;
+        int resId = 0;
+        try {
+            sysUIRes = getActivity().getPackageManager()
+                    .getResourcesForApplication(SYSTEMUI_PACKAGE);
+        } catch (Exception ignored) {
+            // If you don't have system UI you have bigger issues
+        }
+        if (sysUIRes != null) {
+            resId = sysUIRes.getIdentifier(
+                    CONFIG_RESOURCE_NAME, "bool", SYSTEMUI_PACKAGE);
+            if (resId != 0) def = sysUIRes.getBoolean(resId);
+        }
+        enabled = Settings.Secure.getInt(resolver,
+                COBINED_STATUSBAR_ICONS, def ? 1 : 0) == 1;
+        mCombinedIcons.setChecked(enabled);
+        mCombinedIcons.setOnPreferenceChangeListener(this);
     }
 
     public boolean onPreferenceChange(Preference preference, Object newValue) {
@@ -69,6 +94,11 @@ public class DisplayCustomizations extends SettingsPreferenceFragment
             boolean value = (Boolean) newValue;
             Settings.System.putIntForUser(resolver, KEY_NETWORK_TRAFFIC,
                     value ? 1 : 0, UserHandle.USER_CURRENT);
+            return true;
+        } else if (preference == mCombinedIcons) {
+            boolean enabled = (boolean) newValue;
+            Settings.Secure.putInt(resolver,
+                    COBINED_STATUSBAR_ICONS, enabled ? 1 : 0);
             return true;
         }
         return false;
