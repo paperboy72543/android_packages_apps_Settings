@@ -30,6 +30,12 @@
             android:summary="@string/network_traffic_state_summary"
             android:fragment="com.android.settings.fusion.fragments.NetworkTraffic"
             android:defaultValue="false" />
+            
+        <!-- Battery settings -->
+        <Preference
+            android:key="battery_settings"
+            android:title="@string/battery_style_category_title"
+            android:fragment="com.android.settings.fusion.fragments.StatusbarBattery" />
 
     </PreferenceCategory>
 
