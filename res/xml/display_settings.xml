@@ -183,6 +183,14 @@
         android:summary="@string/volte_icon_summary"
         android:defaultValue="true"/>
 
+    <!-- Hidden apps -->
+    <Preference
+        android:key="hidden_apps"
+        android:title="@string/hidden_apps_title"
+        android:summary="@string/hidden_apps_summary"
+        android:persistent="false"
+        android:fragment="com.android.settings.display.HiddenAppSettingsFragment" />
+    
     <PreferenceCategory
         android:title="@string/customization_category_title">
 
